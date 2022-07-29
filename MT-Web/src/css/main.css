@@ -1,0 +1,25 @@
+#container-view {
+    height: calc(100vh - 60px);
+    background-color: darkcyan;
+}
+
+nav a,
+nav .nav-link {
+    color: #000 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-variant: normal;
+}
+
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.span-error {
+    color: red;
+}
+
+.hasError {
+    border: 1px solid #f8d7da !important;
+}
