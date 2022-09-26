@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  
+  # NGINX - WEB
+  frontend-nginx:
+    container_name: nginx-web
+    image: nginx:stable
+    build:
+        context: ./MT-Web
+    volumes:
+      - ./MT-Web:/app
+      - ./MT-Web/node_modules:/app/node_modules
+    ports:
+      - 80:80
+      - 443:433
+
+  # NGINX - API
+  backend-nginx:
+    container_name: nginx-api
+    image: nginx:stable
+    volumes:
+      - ./MT-Api/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+
+  # MucaTour - API
+  backend:
+    container_name: Api-prod
+    build:
+      context: ./MT-Api
+    image: api-prod:latest
+    restart: always
+    ports:
+      - 8081:8081

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MucaTourApplication<MucaTour>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.com.mucatour.MucaTourApplication",
+            "projectName": "MucaTour",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
