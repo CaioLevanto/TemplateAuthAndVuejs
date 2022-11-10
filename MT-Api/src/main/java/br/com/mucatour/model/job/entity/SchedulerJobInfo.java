@@ -10,12 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.mucatour.model.job.enums.ScheduleStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "config_scheduler")
 public class SchedulerJobInfo {
 
@@ -37,7 +43,7 @@ public class SchedulerJobInfo {
     private ScheduleStatus jobStatus;
 
     @Column(name = "has_message", nullable = false)
-    private Boolean hasMessage;
+    private Boolean hasMessage = false;
 
     @Column(name = "message", nullable = true)
     private String message;
@@ -45,9 +51,12 @@ public class SchedulerJobInfo {
     @Column(name = "job_description", nullable = false)
     private String description;
 
-    @Column(name = "rec_days", nullable = true)
-    private Long recDays;
+    @Column(name = "date_info_at", nullable = true)
+    private Long dateInfoAt;
 
-    @Column(name = "repeat_time", nullable = true)
-    private int repeatTime;
+    @Column(name = "rec_days", nullable = true)
+    private Integer recDays;
+
+    @Column(name = "repeat_time", nullable = true, length = 10)
+    private Integer repeatTime;
 }

@@ -15,10 +15,10 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     Optional<RefreshToken> findByToken(String token);
 
     @Modifying
-    @Query("DELETE FROM refreshtoken rt where rt.id=:id")
+    @Query("DELETE FROM RefreshToken rt where rt.id = :id")
     void deleteRefreshTokenById(@Param("id") Long id);
 
     @Modifying
-    @Query("DELETE FROM refreshtoken rt where rt.user.id=:id")
+    @Query("DELETE FROM RefreshToken rt where rt.userId = :id")
     void deleteByUser(@Param("id") Long id);
 }

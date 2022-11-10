@@ -85,7 +85,7 @@
                 </template>
                 <b-form-input value="B0123456789" disabled type="text"/>
               </b-form-group>
-            </b-col>>
+            </b-col>
           </b-row>
 
         </b-tab>

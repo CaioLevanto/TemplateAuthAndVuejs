@@ -1,6 +1,5 @@
 package br.com.mucatour.model.travel.entity;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -14,26 +13,29 @@ import br.com.mucatour.model.travel.enums.GoBankEnum;
 import br.com.mucatour.model.travel.enums.StatusTravel;
 import br.com.mucatour.model.user.User;
 import br.com.mucatour.payload.request.viagem.ViagemRequest;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @Table
+@Entity
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Travel implements Serializable {
-
-    @EqualsAndHashCode.Include
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Travel {
     @Id
-    @Column(columnDefinition = "serial", unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "travel_seq_gen")
-    @SequenceGenerator(name = "travel_seq_gen", sequenceName = "travel_id_seq")
+    @SequenceGenerator(name = "travel_seq_gen", sequenceName = "travel_id_seq", allocationSize = 1)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "solicitante_id")
     private User user;
 
     @Column(name = "created_at", nullable = false)
@@ -46,7 +48,7 @@ public class Travel implements Serializable {
     private long validateAt;
 
     @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private StatusTravel status;
 
     @Column(name = "travel_origin", nullable = false)
@@ -73,17 +75,20 @@ public class Travel implements Serializable {
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "follows", joinColumns = @JoinColumn(name = "follow_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "follows", joinColumns = @JoinColumn(name = "travel_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> follows = new HashSet<>();
 
-    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Itinerary> itinerary;
+    @Builder.Default
+    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Itinerary> itinerary = new ArrayList<>();
 
-    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> payment = new ArrayList<>();
 
-    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Chat> chat;
+    @Builder.Default
+    @OneToMany(mappedBy = "travel", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Chat> chat = new ArrayList<>();
 
     public static Travel buildToTravel(ViagemRequest dto) {
         return Travel.builder()

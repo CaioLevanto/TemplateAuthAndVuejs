@@ -2,7 +2,6 @@ package br.com.mucatour.security.services;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,12 +10,11 @@ import br.com.mucatour.repository.RefreshTokenRepository;
 import br.com.mucatour.repository.UserRepository;
 import br.com.mucatour.security.jwt.exception.TokenRefreshException;
 import br.com.mucatour.security.jwt.models.RefreshToken;
-import lombok.AllArgsConstructor;
 
 import javax.transaction.Transactional;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@Transactional
 public class RefreshTokenService {
 
     @Value("${mucatour.app.jwtRefreshExpirationMs}")
@@ -25,17 +23,19 @@ public class RefreshTokenService {
     RefreshTokenRepository refreshTokenRepository;
     UserRepository userRepository;
 
+    @Autowired
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.userRepository = userRepository;
+    }
+
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);
     }
 
     public RefreshToken createRefreshToken(Long userId) {
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(userRepository.findById(userId).get());
-        refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-        refreshToken.setToken(UUID.randomUUID().toString());
-        refreshToken = refreshTokenRepository.save(refreshToken);
-        return refreshToken;
+        return refreshTokenRepository.save(
+                    RefreshToken.buildRefreshToken(userId, refreshTokenDurationMs));
     }
 
     public RefreshToken verifyExpiration(RefreshToken token) {
@@ -47,7 +47,6 @@ public class RefreshTokenService {
         return token;
     }
 
-    @Transactional
     public void deleteByUserId(Long userId) {
         refreshTokenRepository.deleteByUser(userId);
     }

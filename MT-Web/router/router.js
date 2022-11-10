@@ -23,13 +23,14 @@ export const router = new Router({
     { path: '/cliente/:id', name: 'cliente', component: () => import('../src/views/admin/Cliente.vue') },
     { path: '/pagamento/:id', name: 'pagamento', component: () => import('../src/views/admin/Pagamento.vue') },
     { path: '/chat/:id', name: 'chat', component: () => import('../src/views/admin/Chat.vue') },
+    { path: '/criarPagamento', name: 'criarPagamento', component: () => import('../src/views/admin/CriarPagamento.vue') },
     { path: '/user', name: 'user', component: () => import('../src/views/user/BoardUser.vue') }
   ],
   mode: 'history'
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/login', '/register'];
+  const publicPages = ['/', '/login', '/register', '/criarPagamento'];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !usr) {

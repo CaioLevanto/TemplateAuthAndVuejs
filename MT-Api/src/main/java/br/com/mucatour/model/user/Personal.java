@@ -1,12 +1,13 @@
 package br.com.mucatour.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
+import lombok.NoArgsConstructor;
 import br.com.mucatour.payload.request.user.model.PersonalRequest;
 
-import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.*;
@@ -14,35 +15,34 @@ import javax.persistence.*;
 @Builder
 @Data
 @Entity
-@Table(name = "personal", uniqueConstraints = {
+@Table( uniqueConstraints = {
         @UniqueConstraint(columnNames = "cpf"),
-        @UniqueConstraint(columnNames = "rg"),
-        @UniqueConstraint(columnNames = "passportNumber")
+        @UniqueConstraint(columnNames = "rg")
 })
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Personal implements Serializable {
-
-    @EqualsAndHashCode.Include
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Personal {
     @Id
-    @Column(nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "personal_seq_gen")
     @SequenceGenerator(name = "personal_seq_gen", sequenceName = "personal_id_seq")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "personal")
     private User user;
 
-    @Column(name = "cpf_personal", nullable = false)
+    @Column(name = "cpf", nullable = false)
     private String cpf;
 
-    @Column(name = "birthday_at", nullable = false)
+    @Column(name = "birthday", nullable = false)
     private long birthday;
 
-    @Column(name = "rg_personal", nullable = false)
+    @Column(name = "rg", nullable = false)
     private String rg;
 
-    @Column(name = "passport_number", nullable = false)
+    @Column(name = "passport_number", nullable = true)
     private String passportNumber;
 
     @Column(name = "driver_pass", nullable = false)

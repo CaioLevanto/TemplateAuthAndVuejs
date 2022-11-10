@@ -15,15 +15,18 @@ import br.com.mucatour.exception.TravelException;
 import br.com.mucatour.model.travel.enums.StatusTravel;
 import br.com.mucatour.payload.request.viagem.ViagemRequest;
 import br.com.mucatour.services.TravelService;
-import lombok.AllArgsConstructor;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/travel")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TravelController {
 
     TravelService travelService;
+
+    @Autowired
+    public TravelController(TravelService travelService) {
+        this.travelService = travelService;
+    }
 
     @GetMapping("/status")
     public ResponseEntity<?> getStatus() {

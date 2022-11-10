@@ -3,9 +3,6 @@ package br.com.mucatour.payload.request.viagem;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import br.com.mucatour.model.user.User;
 import lombok.Builder;
 import lombok.Data;
@@ -25,10 +22,8 @@ public class ViagemRequest {
     private User user;
 
     @NotBlank(message = "É obrigatório informar data de partida")
-    @DateTimeFormat(iso = ISO.DATE, fallbackPatterns = { "dd/MM/yyyy", "yyyy-MM-dd"})
     private String startDate;
 
-    @DateTimeFormat(iso = ISO.DATE, fallbackPatterns = { "dd/MM/yyyy", "yyyy-MM-dd"})
     private String backDate;
 
     @NotBlank(message = "Necessário informar tipo de retorno ou ida")

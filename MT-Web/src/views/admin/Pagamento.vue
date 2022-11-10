@@ -1,20 +1,22 @@
 <template>
-  <div class="container">
-    <header class="jumbotron">
-      <h3>{{content}}</h3>
-    </header>
-  </div>
+  <b-container fluid>
+    <b-row class="mt-5">
+      <div class="buttons">
+          <b-button variant="success" class="add-payment"  @click.prevent="createPayment">Adicionar uma novo pagamento</b-button>
+      </div>
+    </b-row>
+  </b-container>
 </template>
 <script>
 import UserService from '../../services/user.service';
 import EventBus from "@/common/EventBus";
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
+
   name: 'Admin',
   data() {
     return {
-      content: ''
+
     };
   },
   mounted() {
@@ -32,6 +34,20 @@ export default {
         }
       }
     );
+  },
+  methods:{
+    createPayment() {
+      this.$router.push("/criarPagamento");
+    },
   }
 };
 </script>
+<style scoped>
+.add-payment {
+  margin: 0 2.5vh;
+  float: right;
+}
+.buttons{
+  width: 100%;
+}
+</style>

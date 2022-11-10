@@ -95,6 +95,7 @@ export default {
     checkScreen() {
       let size = window.innerWidth;
 
+      //Máximo de colunas é 12
       if (size < 576) {
         this.countScreenCalendar = 2;
       } else if (size >= 576 && size < 768) {
@@ -149,7 +150,7 @@ export default {
           this.dados = [
             {
               id: 1,
-              Data: "23/9/2022",
+              Data: "11/11/2022",
               Nome: "Caio Cesar",
               De: "Joinville",
               Tipo: 0,
@@ -158,7 +159,7 @@ export default {
             },
             {
               id: 2,
-              Data: "24/9/2022",
+              Data: "13/11/2022",
               Nome: "Caio Cesar",
               De: "Joinville",
               Tipo: 1,

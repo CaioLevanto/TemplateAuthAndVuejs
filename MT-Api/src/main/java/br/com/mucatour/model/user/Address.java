@@ -1,27 +1,32 @@
 package br.com.mucatour.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 import br.com.mucatour.payload.request.user.model.AddressRequest;
 
-@Builder
 @Data
+@Table
 @Entity
-@Table(name = "address")
-public class Address implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Address {
     @Id
-    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq_gen")
     @SequenceGenerator(name = "address_seq_gen", sequenceName = "address_id_seq")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "address")
     private User user;
 
     @Column(name = "cep", nullable = true, length = 10)

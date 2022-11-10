@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public enum ListJobs {
-    TRAVEL_PENDENCY("travelPendency");
+    TRAVEL_PENDENCY("travelPendency"),
+    TRAVEL_MESSAGE("travelMessage");
 
     private String name;
 }

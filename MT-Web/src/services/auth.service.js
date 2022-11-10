@@ -18,7 +18,7 @@ class AuthService {
   
   logout() {
     let user = JSON.parse(localStorage.getItem("user"));
-    api.get("/auth/logout/" + user.id);
+    api.delete("/auth/logout/" + user.id);
     TokenService.removeUser();
   }
 

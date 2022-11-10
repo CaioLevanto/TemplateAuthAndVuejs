@@ -1,6 +1,14 @@
 package br.com.mucatour.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.experimental.StandardException;
 
+@AllArgsConstructor
 @StandardException
-public class AuthException extends Exception {}
+public class AuthException extends Exception {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public String message;
+}

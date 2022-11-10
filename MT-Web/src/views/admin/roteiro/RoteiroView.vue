@@ -31,7 +31,7 @@ export default {
       content: "",
       menuOptions: [
         { name: "Itinerário", icon: "plane", path: "/itinerario/" },
-        { name: "Pagamento", icon: "money-bill", path: "/pagamentos/" },
+        { name: "Pagamento", icon: "money-bill", path: "/pagamento/" },
         { name: "Informações", icon: "user", path: "/cliente/" },
         { name: "Chat", icon: "comment", path: "/chat/" },
       ],
